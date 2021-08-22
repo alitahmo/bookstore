@@ -34,6 +34,9 @@ CREATE TABLE `books` (
   `shopperprice` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+ALTER TABLE `books`
+  ADD PRIMARY KEY (`bookid`);
+
 --
 -- Dumping data for table `books`
 --
@@ -78,6 +81,9 @@ CREATE TABLE `shoppers` (
   `shopperemail` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+
+ALTER TABLE `shoppers`
+  ADD PRIMARY KEY (`shopperid`);
 --
 -- Dumping data for table `shoppers`
 --
@@ -95,55 +101,15 @@ INSERT INTO `shoppers` (`shopperid`, `shoppername`, `shopperphone`, `shopperemai
 --
 
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
+  `userid` int(11) NOT NULL,
   `username` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `books`
---
-ALTER TABLE `books`
-  ADD PRIMARY KEY (`bookid`);
-
---
--- Indexes for table `shoppers`
---
-ALTER TABLE `shoppers`
-  ADD PRIMARY KEY (`shopperid`);
-
---
--- Indexes for table `user`
---
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`userid`);
 
---
--- AUTO_INCREMENT for dumped tables
---
 
---
--- AUTO_INCREMENT for table `books`
---
-ALTER TABLE `books`
-  MODIFY `bookid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `shoppers`
---
-ALTER TABLE `shoppers`
-  MODIFY `shopperid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `user`
---
-ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
