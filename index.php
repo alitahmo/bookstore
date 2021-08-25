@@ -1,6 +1,9 @@
 <?php 
 require 'header.php';
-
+$db_book_conn= mysqli_connect("localhost", "root", "", "Bookstore");
+    if (!$db_book_conn) {
+        die("Connection failed to Bookstore Database procedural ".mysqli_connect_error());
+    }
 ?>
 
     <!-- main Content -->
@@ -9,18 +12,6 @@ require 'header.php';
                     <!-- START div on the top -->
             <div>
                     <p class="fs-4 mb-0 text-center fw-bold border text-capitalize">Add new shopping</p>
-
-                    <!-- Showing error if filled incorrectly -->
-                    <div class="row">
-                        <div class="text-center fw-bold text-danger"><?php echo $errors['name'];?></div>
-                        <div class="text-center fw-bold text-danger"><?php echo $errors['fasting'];?></div>
-                        <div class="text-center fw-bold text-danger"><?php echo $errors['email'];?></div>
-                        <div class="text-center fw-bold text-danger"><?php echo $errors['age'];?></div>
-                        <div class="text-center fw-bold text-danger"><?php echo $errors['phone'];?></div>
-                        <div class="text-center fw-bold text-success"><?php echo $success;?></div>
-                    </div>
-
-                    <!-- division part into cols and rows -->
                     <div class="row">
                         <!-- two top columns part -->
                         
@@ -177,7 +168,6 @@ require 'header.php';
                                     </div>
                                 </div> <!-- END Offer  Kryar  -->
 
-                            
                                 <div class="row">
                                         <p class="fw-bold text-capitalize mb-2 ps-3">book list:</p>
                                 </div>
@@ -186,15 +176,15 @@ require 'header.php';
                                                     <?php
                                                         $books = Book::get_all_book();
                                                     ?>
-                                                        <input class="form-control bookInputEner" type="text" name="" list="allbooklist" autocomplete="off" id="" placeholder="Write book name">
+                                                        <input class="form-control bookInputEner" type="text" name="" list="allbooklist" autocomplete="off" id="bookNameValue" value="<?php echo $bookValName;?>" placeholder="Write book name">
                                                         <datalist id="allbooklist">
                                                             <?php foreach($books as $book): ?>
                                                                 <option class="bookInputOption" value="<?php echo $book->bookname; ?>"><?php echo $book->bookname; ?></option>
                                                             <?php endforeach; ?>
                                                         </datalist>
-                                                    <button class="btn btn-outline-success" id="search" name="addbookbtn" value="addbookbtn">Add book</button>
                                         </div>
                                 </div>
+
                                 <!-- books Table name place during Kryar registration -->
                                 <div class="row mx-1">
                                     
@@ -204,19 +194,51 @@ require 'header.php';
                                                 <th class="colorheader" style="width: 8%;" scope="col">#</th>
                                                 <th class="colorheader" scope="col">book Name</th>
                                                 <th class="colorheader" style="width: 20%;" scope="col">Price</th>
+                                                <th class="colorheader" style="width: 20%;" scope="col">Delete</th>
                                             </tr>
                                         </thead>
                                     
                                         
-                                        <tbody id="booktable">
+                                        <tbody class="booktable" id="">
                                             <tr>
                                                 <td><p class="form-control">1</p>
                                                 <td><input class="form-control" type="text"  autocomplete="off" id="" placeholder="Write book name"></td>
                                                 <td><input class="form-control"  autocomplete="off" id="" placeholder="price"></td>
+                                                <td><p class="form-control text-center align-middle"><i class="fas fa-backspace"></i></p></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
+
+                                <!-- Ajax to add Book to booklist -->
+                                   
+                                <script>
+                                    $(document).ready(function(){
+                                        $("#bookNameValue").on('change',function(){
+                                            var $bookValName =$("#bookNameValue").val();
+                                            
+                                            if($bookValName != ''){
+                                                    $.ajax({
+                                                    url:'addbook.php',
+                                                    type:'POST',
+                                                    data:"request=" + $bookValName, // it means testlist.php?request=Hematology , or serology ,.....so on
+                                                    beforeSend: function(){
+                                                        //like a loading during fetching data from database
+                                                        $(".booktable").html("<span class='text-danger fs-2 fw-bold'> Working...... </span>");
+                                                    },
+                                                    // if the process success then run this function(data)
+                                                    success: function(data){
+                                                        // when data fetched write the location of showing
+                                                        $(".booktable").last().after().html(data);
+                                                    }
+                                                })
+                                            }
+                                            else {
+                                            alert("please add test to testlist then click on add book");
+                                            }
+                                        })
+                                    })
+                                </script>
 
                                 
                             
