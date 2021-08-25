@@ -19,7 +19,7 @@ if (!$db_book_conn) {
       }      
      if ($count){
       }else{
-            echo "<span class='text-danger fs-2 fw-bold text-center by-5 my-5 text-capitalize'> Please select or write a correct test category </span>";
+            echo "<span class='text-danger fs-2 fw-bold text-center by-5 my-5 text-capitalize'> Please select or write a correct book name </span>";
       }
       while($bookRow = mysqli_fetch_assoc($resultsearch)){
             ?>
