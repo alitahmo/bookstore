@@ -221,7 +221,7 @@ $db_book_conn= mysqli_connect("localhost", "root", "", "Bookstore");
                                                     $.ajax({
                                                     url:'addbook.php',
                                                     type:'POST',
-                                                    data:"request=" + $bookValName, // it means testlist.php?request=Hematology , or serology ,.....so on
+                                                    data:"request=" + $bookValName, 
                                                     beforeSend: function(){
                                                         //like a loading during fetching data from database
                                                         $(".booktable").html("<span class='text-danger fs-2 fw-bold'> Working...... </span>");
@@ -234,7 +234,7 @@ $db_book_conn= mysqli_connect("localhost", "root", "", "Bookstore");
                                                 })
                                             }
                                             else {
-                                            alert("please add test to testlist then click on add book");
+                                            alert("please add book to booklist then click on add book");
                                             }
                                         })
                                     })
